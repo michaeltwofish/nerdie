@@ -8,7 +8,7 @@ function Puppet(parentNerdie) {
 
 Puppet.prototype.init = function () {
 	this.pluginInterface.registerPattern(
-		new RegExp('^(#\\w+)\\s+(.+)$'),
+		new RegExp('^(##?\\w+)\\s+(.+)$'),
 		this.puppet
 	);
 };
