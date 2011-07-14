@@ -1,4 +1,5 @@
 var request = require('request');
+var async = require('async');
 
 var NerdieInterface = require('../nerdie_interface.js')
 , config = null;
@@ -17,37 +18,30 @@ GetTime.prototype.init = function () {
 
 GetTime.prototype.time = function(msg) {
 
-	var fulfilled = {};
-	//console.log('Time executed', config);
+	var sum = '';
 
-	for(var place in config) {
-		//console.log(place, config[place]);
-		uri = 'http://www.timeapi.org/' + encodeURIComponent(config[place].zone) + '/now?\\a%20\\b%20\\d%20\\I:\\M%20\\p%20\\Y';
-		var e = place;
-
-		//console.log('Requesting: ' + uri);
-		request({uri: uri}, function (error, response, body) {
-			console.log('Result for ', e, place, response.statusCode, body);
-			if (!error && response.statusCode == 200) {
-				fulfilled[config[place].placename] = body;
-			} else {
-				fulfilled[place.placename] = 'API Error';
-			}
-			if(fulfilled.length == config.length) {
-				var sum = [];
-				for(var item in fulfilled) {
-					sum.push(item + ': ' + fulfilled[item])
+	async.forEachSeries(
+		config, 
+		function(item, callback){
+			uri = 'http://www.timeapi.org/' + encodeURIComponent(item.zone) + '/now?\\a%20\\b%20\\d%20\\I:\\M%20\\p%20\\Y';
+			request({uri: uri}, function (error, response, body) {
+				console.log('Result for ', item, response.statusCode, body);
+				if(sum != '') {
+					sum += '  |  ';
 				}
-				sum = sum.join('  |  ');
-				
-				msg.say(msg.user + ": " + sum);
-				return;
-			}
-		});
-		
-	}
+				if (!error && response.statusCode == 200) {
+					sum += item.placename + ': ' + body;
+				} else {
+					sum += item.placename + ': ' + 'API Error';
+				}
+				callback();
+			});
+		},
+		function(result) {
+			msg.say(msg.user + ": " + sum);
+		}
+	);
 
 };
-
 
 module.exports = GetTime;
