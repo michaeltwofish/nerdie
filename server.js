@@ -10,6 +10,7 @@ if (undefined === config.prefix) {
 
 function Nerdie() {
 	this.config = config;
+	this.loadedPlugins = {};
 	events.EventEmitter.call(this);
 }
 Nerdie.prototype = Object.create(events.EventEmitter.prototype, {
@@ -22,7 +23,6 @@ Nerdie.prototype = Object.create(events.EventEmitter.prototype, {
 Nerdie.prototype.bot = jerk(function(j){
 	var plugin = null
 	  , nerdie = new Nerdie()
-	  , loadedPlugins = {}
 	  , name = null;
 
 	walker = walk.walk('plugins', {followLinks: false});
@@ -46,14 +46,15 @@ Nerdie.prototype.bot = jerk(function(j){
 					j.watch_for(pattern, callback);
 				});
 			}
-			loadedPlugins[name] = plugin;
+			//console.log(nerdie.loadedPlugins);
+			nerdie.loadedPlugins[name] = plugin;
 			console.log('Loaded ' + name + ' plugin.');
 		}
 		next();
 	});
 
 	walker.on("end", function() {
-		nerdie.emit('init', config, loadedPlugins);
+		nerdie.emit('init', config, nerdie.loadedPlugins);
 	});
 
 }).connect(config);
