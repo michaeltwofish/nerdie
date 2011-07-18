@@ -1,7 +1,5 @@
-var NerdieInterface = require('../nerdie_interface.js')
-  , config = null
-  , loadedPlugins = null
-  , nerdie = null;
+var NerdieInterface = require('nerdie_interface.js')
+  , config = null;
 
 function Reload(parentNerdie) {
 	this.pluginInterface = new NerdieInterface(parentNerdie, this);
