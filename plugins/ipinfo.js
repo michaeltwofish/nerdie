@@ -70,10 +70,11 @@ IPInfo.prototype.getIPInfo = function(msg) {
 				return;
 			}
 			if (body.statusCode == 'OK' && body.countryCode != '' ) {
-				response = msg.match_data[2] 
-					+ " - " + ucfirst(body.cityName)
-					+ ", " + ucfirst(body.regionName)
-					+ ", " + ucfirst(body.countryName);
+				response = msg.match_data[2] + " - ";
+				response += (body.ipAddress != msg.match_data[2] ) ? "(" + body.ipAddress + ") ": "";
+				response += (body.cityName != "-" ) ? ucfirst(body.cityName) + ", " : "";
+				response += (body.regionName != "-") ? ucfirst(body.regionName) + ", " : "";
+				response += ucfirst(body.countryName);
 				msg.say( msg.user + ": " + response );
 			}
 			else {
