@@ -8,7 +8,7 @@ function Puppet(parentNerdie) {
 
 Puppet.prototype.init = function () {
 	this.pluginInterface.registerPattern(
-		new RegExp('^(##?\\w+)\\s+(.+)$'),
+		new RegExp('^(act|say)\s+(##?\\w+)\\s+(.+)$'),
 		this.puppet
 	);
 };
@@ -20,7 +20,12 @@ Puppet.prototype.puppet = function(msg) {
 		return;
 	}
 	else {
-		nerdie.bot.say(msg.match_data[1], msg.match_data[2]);
+		if( msg.match_data[1] == 'say' ) {
+			nerdie.bot.say(msg.match_data[2], msg.match_data[3]);
+		}
+		else {
+			nerdie.bot.action(msg.match_data[2], msg.match_data[3]);
+		}
 	}
 };
 
