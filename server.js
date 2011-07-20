@@ -16,6 +16,7 @@ process.on('uncaughtException', function (err) {
 
 function Nerdie() {
 	this.config = config;
+	this.loadedPlugins = {};
 	events.EventEmitter.call(this);
 }
 Nerdie.prototype = Object.create(events.EventEmitter.prototype, {
@@ -28,7 +29,6 @@ Nerdie.prototype = Object.create(events.EventEmitter.prototype, {
 Nerdie.prototype.bot = jerk(function(j){
 	var plugin = null
 	  , nerdie = new Nerdie()
-	  , loadedPlugins = {}
 	  , name = null;
 
 	require.paths.push(__dirname);
@@ -43,14 +43,14 @@ Nerdie.prototype.bot = jerk(function(j){
 				j.watch_for(pattern, callback);
 			});
 		}
-		loadedPlugins[name] = plugin;
+		nerdie.loadedPlugins[name] = plugin;
 		console.log('Loaded ' + name + ' plugin.');
 	}
 
 	var loadedCore = false, loadedUser = false;
 	var doInit = function () {
 		if (loadedCore && loadedUser) {
-			nerdie.emit('init', config, loadedPlugins);
+			nerdie.emit('init', config, nerdie.loadedPlugins);
 		}
 	};
 
