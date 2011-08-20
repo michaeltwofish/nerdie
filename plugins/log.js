@@ -25,7 +25,8 @@ Log.prototype.init = function () {
 Log.prototype.logHandler = function (msg) {
 	var date = new Date();
 	var entry = [date.toFormat('HH24:MI:SS'), msg.user, msg.text].join(' : ') + '\n';
-	var channel = msg.source.replace(/#/, '');
+  // Strip leading #
+	var channel = msg.source.replace(/^#+/, '');
 
 	var channel_path = path.join(logs, channel);
 
@@ -38,7 +39,6 @@ Log.prototype.logHandler = function (msg) {
 
 	// Log files are dates
 	var logfile = path.join(channel_path, date.toFormat('YYYY-MM-DD'));
-	console.log(logfile);
 	fs.open(logfile, 'a', 0666, function(err, fd) {
 		fs.writeSync(fd, entry);
 	});
