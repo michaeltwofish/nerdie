@@ -40,7 +40,14 @@ Log.prototype.logHandler = function (msg) {
 	// Log files are dates
 	var logfile = path.join(channel_path, date.toFormat('YYYY-MM-DD'));
 	fs.open(logfile, 'a', 0666, function(err, fd) {
+		if (err) {
+			console.log("file descripter: ", fd);
+			console.log("entry: ", entry);
+			throw err;
+		}
+
 		fs.writeSync(fd, entry);
+		fs.close(fd);
 	});
 
 };
