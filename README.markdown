@@ -1,7 +1,41 @@
-* Install [node](http://nodejs.org/).
-* Install [npm](http://npmjs.org/).
-* Clone nerdie from the URL on this page.
-* Run `npm install` in the nerdie directory and npm will install all the modules required.
-* Copy `config.json.default` to `config.json` and edit it to your liking. It's in `.gitignore`, so it won't be committed.
-* Make a directory `db` in the nerdie directory to hold databases, such as your Tell database.
-* Run `node server.js`, and your bot should show up in the configured channels.
+# Installation
+
+First, get a copy of this project.  You probably want to fork http://github.com/nerdie/nerdie and then clone that.
+
+Next, make sure you have [node](http://nodejs.org/) and [npm](http://npmjs.org/) installed.
+
+In your directory, run:
+
+    npm install .
+
+Copy the config file `config.json.default` to `config.json` and edit as appropriate. It's in `.gitignore`, so your sensitive information won't be committed.
+
+Now run:
+
+    node server.js
+
+# Usage
+
+There are no usage instructions. For a nerdie bot named `nerdie` using the default prefix `!`, the following regular expressions are registered with nerdie by default:
+
+    Registered pattern: /what is best in life/i
+    Registered pattern: /(strong.+steel)|(steel.+strong)|(steel.+strength)|(strength.+steel)/i
+    Registered pattern: /^(!|nerdie[:,]?\s)help$/
+    Registered pattern: /^(?:is)?\s+any(?:one|body)\s+(?:here|around|awake)/i
+    Registered pattern: /^(good)?\s?morning?/i
+    Registered pattern: /^\:?wq?$/i
+    Registered pattern: /^(!|nerdie[:,]?\s)count$/
+    Registered pattern: /^(!|nerdie[:,]?\s)uniqueid$/
+    Registered pattern: .
+    Registered pattern: /^(!|nerdie[:,]?\s)tell\s*(.+)$/
+    Registered pattern: /^(!|nerdie[:,]?\s)ask\s*(.+)$/
+    Registered pattern: /^(!|nerdie[:,]?\s)reload\s*(.+)$/
+    Registered pattern: /^(!|nerdie[:,]?\s)g(?:oogle)?\s*(.+)$/
+    Registered pattern: /^(!|nerdie[:,]?\s)js\s*(.+)$/
+    Registered pattern: /^(!|nerdie[:,]?\s)eval\s*(.+)$/
+    Registered pattern: /^(!|nerdie[:,]?\s)convert\s*(.+)$/
+    Registered pattern: /^(!|nerdie[:,]?\s)beerscore\s*(.+)$/
+    Registered pattern: /^(!|nerdie[:,]?\s)twitter\s*(.+)$/
+    Registered pattern: /https?:\/\/twitter.com\/(#!\/)?(.+?)\/status\/([0-9]+)/i
+    Registered pattern: /^(!|nerdie[:,]?\s)weather\s*(.+)$/
+    Registered pattern: /.*(?:terry\s+chay|tychay)/i
