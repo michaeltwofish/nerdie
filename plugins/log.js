@@ -19,7 +19,7 @@ function Log(parentNerdie) {
 	}
 }
 Log.prototype.init = function () {
-	this.pluginInterface.registerPattern('.*', this.logHandler);
+	this.pluginInterface.registerPattern('^(?!\\[off\\]).*', this.logHandler);
 };
 
 Log.prototype.logHandler = function (msg) {
