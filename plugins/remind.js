@@ -29,7 +29,7 @@ Remind.prototype.gotDb = function (incomingDb) {
 }
 var isChannel = function (source) {
 	// check source (# or & means it's a channel)
-	var first = source.substr(0, 1);
+	var first = String(source).substr(0, 1);
 	if ('#' === first || '&' === first) {
 		return true;
 	}
@@ -54,7 +54,7 @@ var remindHandler = function (msg) {
 		myInterface.uniqueId(),
 		{
 			recipient: remindNick,
-			source: msg.source,
+			source: String(msg.source),
 			msg: {
 				time: Date.now(),
 				sender: msg.user,
@@ -96,7 +96,7 @@ var activityHandler = function (msg) {
 	}
 	db.fetch({},
 		function (doc, key) {
-			if (doc.source == msg.source && doc.recipient == msg.user && ((Date.now() - doc.msg.time) / 1000 > delay)) {
+			if (doc.source == String(msg.source) && doc.recipient == msg.user && ((Date.now() - doc.msg.time) / 1000 > delay)) {
 				return true;
 			}
 		},
