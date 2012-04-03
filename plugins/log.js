@@ -26,7 +26,7 @@ Log.prototype.logHandler = function (msg) {
 	var date = new Date();
 	var entry = [date.toFormat('HH24:MI:SS'), msg.user, msg.text].join(' : ') + '\n';
   // Strip leading #
-	var channel = msg.source.replace(/^#+/, '');
+	var channel = String(msg.source).replace(/^#+/, '');
 
 	var channel_path = path.join(logs, channel);
 
